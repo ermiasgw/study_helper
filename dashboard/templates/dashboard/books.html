@@ -1,0 +1,57 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %} 
+{% block content %}
+
+<section class='text-center container'>
+    <h2>Search books and browse your favorite</h2>
+    <p>just enter the search query to obtain the results</p><b></b>
+    <form action="{% url 'book' %}" method="get">
+        {{form}}
+        <input class="btn btn-danger" type="submit" value="Submit">
+    </form><br>
+    
+    {% if data != None %}
+    {% for dat in data%}        
+    <a href="{{dat.preview}}" target="_blank">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="img-fluid" src="{{ dat.thumbnail }}" alt="">
+
+                    </div>
+                    <div class="col-md-9">
+                        <h3 class="p-0 m-0">{{dat.title}}</h3>
+                        <b>
+                            <u>
+                                {% if dat.subtitle  %}
+                                <h5 class="p-0 m-0">{{dat.subtitle}}</h5>
+                                {% endif %}
+                            </u>
+                        </b>
+                        <h6 class="p-0 m-1">{{dat.description}}</h6>
+                        <b> 
+                            
+                            {% if dat.categories %}
+                            {% for i in dat.categories %} 
+                            <h6 class="ml-0 mt-3">Category: {{i}}</h6>
+                            {% endfor %} 
+                            {% endif %}
+                            <h6 class="ml-0 mt-1">Pages: {{dat.count}}</h6>
+                            
+                            {% if dat.rating %}                                
+                            <h6 class="ml-0 mt-1">Rating: {{dat.rating}}</h6>
+                            {% endif %}
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %} 
+    {% endif %}
+
+    <br>
+</section>
+
+{% endblock content %}
